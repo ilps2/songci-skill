@@ -1,3 +1,5 @@
+[English](README_en.md) | [中文](README.md)
+
 # 宋瓷 · Songci Skill 与天青 UI 模板
 
 > 把宋代瓷器美学转化为「AI 生图提示词」与「UI 设计语言」的完整技能包，

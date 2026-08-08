@@ -1,5 +1,5 @@
 ---
-name: 宋瓷
+name: songci
 description: 宋瓷美学应用技能 —— 用于①宋瓷风格的 AI 生图/生视频提示词写作（汝窑天青、哥窑开片、钧窑窑变、建窑兔毫/曜变、龙泉粉青等）；②宋瓷美学转译的 UI 设计语言（天青 Design Language）应用于界面、品牌、可视化设计。触发关键词：宋瓷、宋代美学、宋韵、汝窑、官窑、哥窑、钧窑、定窑、龙泉、建窑、耀州、磁州、天青釉、天青、粉青、梅子青、开片、金丝铁线、窑变、兔毫、油滴、曜变、茶盏、梅瓶、青瓷、白瓷、黑釉、新中式、国风 UI、宋瓷风提示词、天青设计语言、Song porcelain、Ru ware、Jian ware、celadon。
 version: "1.0.0"
 author: "CodeBuddy"
@@ -146,12 +146,14 @@ busy background, cluttered scene, watermark, text, modern style
 - UI 输出：优先产出可运行的 HTML/CSS demo 或 tokens 文件；说明色值来源（窑口/釉色），让用户理解每个决策的依据。
 - 所有输出保持宋瓷审美的克制：信息密度低、装饰少、留白足。
 
-## 参考资产（assets/）
+## 参考资产
 
 | 文件 | 内容 |
 |---|---|
+| `assets/design-language-ai.md` | 天青设计语言 **AI 速查卡**（AI 使用前必读：数值规范、占比、对比度坑、禁止清单） |
 | `assets/prompt-guide.md` | 生图/生视频提示词完整速查（窑口×器型×特征×场景组合表） |
 | `assets/design-language.md` | 天青 UI 设计语言完整规范速查 |
 | `assets/tokens.css` | 可直接引入的 CSS 设计令牌（含暗色模式与组件类） |
 | `assets/tokens.json` | 标准设计令牌 JSON（Style Dictionary / Figma Tokens 兼容） |
 | `assets/palette.png` | 宋瓷釉色板参考图（生图配色参考） |
+| `demo/index.html` | 天青设计语言可运行参考实现（品牌官网，明暗双模式、组件与图表） |

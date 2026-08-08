@@ -1,120 +1,63 @@
-[English](README_en.md) | [中文](README.md)
+# 天青 Design Language
 
-# 宋瓷 · Songci Skill 与天青 UI 模板
+**把宋代美学做成 UI 设计系统。** 9 座宋代窑口，每个颜色都有出处——一色一窑，每个决策皆有依据。
 
-> 把宋代瓷器美学转化为「AI 生图提示词」与「UI 设计语言」的完整技能包，
-> 附赠一个「会变色的」宋瓷风封面模板（小红书 / 微信 / 公众号通用）。
+- 10 阶天青色阶 + 8 组语义色 + 明暗双模式
+- 五原则：器无赘饰 · 釉色为美 · 温润如玉 · 计白当黑 · 动若釉流
+- 完整 Design Tokens（CSS / JSON，Style Dictionary 与 Figma Tokens 兼容）
+- 可运行参考实现 + AI 速查卡
 
-![封面预览](docs-cover.png)
-
----
-
-## 📦 仓库结构
-
-```
-songci-skill/
-├── AGENTS.md                  # Agent 自动读取的仓库说明（Claude Code / Cursor / Codex 等）
-├── docs-cover.png            # README 封面图
-├── skills/
-│   └── 宋瓷/                 # 标准 SKILL.md 技能包（所有 agent 通用，复制即用）
-│       ├── SKILL.md          # 技能主文件（触发词 + 指令）
-│       └── assets/           # 提示词速查 / 设计语言 / 设计令牌 / 釉色板
-├── templates/                # HTML 模板（单文件自包含，复制即用）
-│   ├── 宋瓷风·通用主题版模板.html   # ★ 最新：8 釉色主题一键切换 + 全文字可编辑
-│   ├── 宋瓷风·通用文字版模板.html   # 通用文字版
-│   ├── 宋瓷风小红书通用模板.html     # 5 场景预设版
-│   ├── 宋瓷风小红书模板.html         # 穿搭版
-│   └── cover_*.png                 # 6 张现成封面
-└── docs/                     # 全案文档
-    ├── 天青·宋瓷UI设计语言规范        # 设计规范 PDF/MD + tokens.css/json + 设计系统 demo
-    ├── 宋瓷美学·生图提示词研究手册    # 生图手册
-    ├── 电影运镜提示词速查手册         # 运镜手册
-    ├── 宋瓷釉色·新中式女装配色方案    # 服装配色 ×6 釉色
-    ├── 宋瓷风广告背景·女装mockup     # 广告背景 mockup
-    ├── 公众号文章 + 排版版 + 封面     # 公众号发布全套
-    ├── 公众号API发布说明 + wechat_publish.py  # 官方 API 发布脚本
-    └── 宋瓷釉色板.png
-```
-
----
-
-## ✨ 宋瓷 Skill 能做什么
-
-### 1. 宋瓷风生图 / 生视频提示词
-
-**核心公式**：`窑口釉色 + 器型 + 釉面特征 + 展示场景 + 光线 + 摄影质感`
-
-- 9 大窑口速查（汝窑天青 / 官窑冰裂 / 哥窑金丝铁线 / 钧窑窑变 / 建窑兔毫·曜变 / 龙泉粉青……）
-- 三套场景语法：博物馆级还原 / 文人氛围创作 / 细节微距研究
-- 防翻车负面词（防止天青变艳蓝、防止跑成明清彩瓷）
-
-示例：
-
-```
-ru ware porcelain vase, meiping form, sky-blue glaze, jade-like muted tone,
-subtle cicada-wing crackle, dim museum display, soft top spotlight,
-dark backdrop, product photography, photorealistic, 8k
-```
-
-### 2. 天青 UI 设计语言（宋瓷 → 界面）
-
-- **五原则**：器无赘饰 · 釉色为美 · 温润如玉 · 计白当黑 · 动若釉流
-- **色彩令牌**：天青主色（<15%）、月白铺底、象牙白承内容、黑釉立文字、茶褐点睛——全体系无外来色
-- 配套 `tokens.css` / `tokens.json`，可直接引入项目或导入 Figma
-
----
-
-## 📱 HTML 模板功能
-
-| 功能 | 说明 |
-|---|---|
-| 单文件自包含 | html2canvas 已内联，复制到任何设备双击即用，无需联网 |
-| 全文字可编辑 | 标题 / 标签 / 印章 / 主文案 / 正文 / 话题 / 品牌，点哪改哪，空时有占位提示 |
-| 8 釉色一键换肤 | 天青 / 粉青 / 月白 / 豆青 / 象牙白 / 茶褐 / 黑釉 / 窑变，深浅自动配文字色 |
-| 品牌名联动 | 切换主题时左下角品牌名自动跟随（黑釉 · HEIYOU） |
-| 印章自适应 | 文字增多时宽度自动向右锚定、向左延伸 |
-| 一键导出 PNG | 编辑虚线框导出时自动隐藏，2 倍分辨率成品图 |
-| 5 场景预设 | 美食 / 家居 / 旅行 / 好物 / 知识 文案一键填充 |
-
-**适用**：小红书封面、朋友圈贴图、公众号头图 / 卡片、视频号封面、电商氛围图、品牌提案示意。
-
----
-
-## 🚀 安装与使用
-
-### 安装 Skill（任意 Agent）
-
-Skill 采用标准 `SKILL.md` 格式（`skills/宋瓷/SKILL.md`），兼容 Claude Code / CodeBuddy / Cursor / Codex 等主流 agent：
+## 快速开始
 
 ```bash
-# 一键安装（任何支持 SKILL.md 的 agent）
-npx skills add ilps2/songci-skill
+# 打开参考实现（浏览器直接预览）
+open demo/index.html
 
-# Claude Code（Mac / Linux）
-mkdir -p ~/.claude/skills && cp -r skills/宋瓷 ~/.claude/skills/
-
-# CodeBuddy（Mac）
-cp -r skills/宋瓷 ~/.codebuddy/skills/
-# CodeBuddy（Windows）
-# 复制 skills/宋瓷 到 %USERPROFILE%\.codebuddy\skills\
+# 引入设计令牌
+<link rel="stylesheet" href="assets/tokens.css">
 ```
 
-重启会话后，对话中提到「汝窑 / 天青 / 宋瓷风 UI / 新中式」或 `@宋瓷` 即自动调用。
+## 核心色（一色一窑）
 
-### 使用模板
+| 色值 | 名字 | 出处 |
+|---|---|---|
+| `#7FA8B8` | 天青 | 汝窑 · 全局主色 |
+| `#B5CFC8` | 粉青 | 龙泉 · 次级强调 |
+| `#EEF1F3` | 月白 | 官窑 · 背景 |
+| `#F7F4EC` | 象牙白 | 定窑 · 表面 |
+| `#22201C` | 黑釉 | 建窑 · 主文字 |
+| `#5C7A52` | 豆青 | 耀州 · 成功态 |
+| `#A47C48` | 茶褐 | 茶席 · 警示点缀 |
+| `#A65E44` | 窑变赭 | 钧窑 · 错误态 |
 
-用浏览器（Chrome / Safari / Edge）打开 `templates/宋瓷风·通用主题版模板.html`：
+## 五原则
 
-1. 点击任意文字区编辑内容
-2. 点击底部釉色圆点切换主题
-3. 点「导出 PNG 图片」下载成品封面
+1. **器无赘饰** —— 极简。装饰若有若无，用留白和字重分层
+2. **釉色为美** —— 低饱和，单主色，天青占比 <15%
+3. **温润如玉** —— 圆角 ≥6px，漫反射阴影，禁纯黑投影
+4. **计白当黑** —— 区块间距 ≥40px，单屏视觉焦点 ≤3
+5. **动若釉流** —— 动效 200–500ms 缓出，禁弹跳
 
----
+## 目录
 
-## 📄 License
+```
+SKILL.md                   技能入口（Skill 用法）
+assets/
+  design-language-ai.md    AI 速查卡（AI 使用前必读）
+  design-language.md       完整规范速查
+  tokens.css               可引入的 CSS 设计令牌（含暗色模式）
+  tokens.json              Design Tokens JSON（Figma 兼容）
+  palette.png              宋瓷釉色板参考图
+  prompt-guide.md          宋瓷生图提示词速查（附带功能）
+demo/
+  index.html               可运行参考实现（品牌官网，明暗双模式）
+  out/                     demo 截图与发布文案
+```
 
-MIT © 2026
+## 验证
 
----
+参考实现经过实测：双模式渲染、组件态、对比度（WCAG AA）、响应式。验证中发现的缺陷（按钮对比度 2.05→4.93:1、暗色纯黑阴影）已修复。
 
-*灵感来源：宋代五大名窑（汝 / 官 / 哥 / 钧 / 定）与建窑、龙泉窑的美学体系。*
+## License
+
+MIT

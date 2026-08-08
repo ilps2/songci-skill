@@ -11,9 +11,10 @@
 
 ```
 songci-skill/
+├── AGENTS.md                 # Agent-facing repo guide (auto-read by Claude Code / Cursor / Codex, etc.)
 ├── docs-cover.png            # README cover image
-├── skill/
-│   └── 宋瓷/                 # Complete CodeBuddy Skill (copy & use)
+├── skills/
+│   └── 宋瓷/                 # Standard SKILL.md skill pack (works with any agent, copy & use)
 │       ├── SKILL.md          # Main skill file (trigger words + instructions)
 │       └── assets/           # Prompt cheatsheet / design language / design tokens / glaze palette
 ├── templates/                # HTML templates (self-contained single files, copy & use)
@@ -79,16 +80,24 @@ dark backdrop, product photography, photorealistic, 8k
 
 ## 🚀 Installation & Usage
 
-### Install the Skill (CodeBuddy)
+### Install the Skill (any agent)
+
+The skill uses the standard `SKILL.md` format (`skills/宋瓷/SKILL.md`), compatible with Claude Code / CodeBuddy / Cursor / Codex and other mainstream agents:
 
 ```bash
-# Mac
-cp -r skill/宋瓷 ~/.codebuddy/skills/
-# Windows
-# Copy skill/宋瓷 to %USERPROFILE%\.codebuddy\skills\
+# One-command install (any SKILL.md-compatible agent)
+npx skills add ilps2/songci-skill
+
+# Claude Code (Mac / Linux)
+mkdir -p ~/.claude/skills && cp -r skills/宋瓷 ~/.claude/skills/
+
+# CodeBuddy (Mac)
+cp -r skills/宋瓷 ~/.codebuddy/skills/
+# CodeBuddy (Windows)
+# Copy skills/宋瓷 to %USERPROFILE%\.codebuddy\skills\
 ```
 
-After restarting a CodeBuddy session, mentioning 「汝窑 / 天青 / 宋瓷风 UI / 新中式」 or `@宋瓷` triggers the skill automatically.
+After restarting a session, mentioning 「汝窑 / 天青 / 宋瓷风 UI / 新中式」 or `@宋瓷` triggers the skill automatically.
 
 ### Use the Templates
 

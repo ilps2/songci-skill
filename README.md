@@ -13,9 +13,10 @@
 
 ```
 songci-skill/
+├── AGENTS.md                  # Agent 自动读取的仓库说明（Claude Code / Cursor / Codex 等）
 ├── docs-cover.png            # README 封面图
-├── skill/
-│   └── 宋瓷/                 # 完整 CodeBuddy Skill（复制即用）
+├── skills/
+│   └── 宋瓷/                 # 标准 SKILL.md 技能包（所有 agent 通用，复制即用）
 │       ├── SKILL.md          # 技能主文件（触发词 + 指令）
 │       └── assets/           # 提示词速查 / 设计语言 / 设计令牌 / 釉色板
 ├── templates/                # HTML 模板（单文件自包含，复制即用）
@@ -81,16 +82,24 @@ dark backdrop, product photography, photorealistic, 8k
 
 ## 🚀 安装与使用
 
-### 安装 Skill（CodeBuddy）
+### 安装 Skill（任意 Agent）
+
+Skill 采用标准 `SKILL.md` 格式（`skills/宋瓷/SKILL.md`），兼容 Claude Code / CodeBuddy / Cursor / Codex 等主流 agent：
 
 ```bash
-# Mac
-cp -r skill/宋瓷 ~/.codebuddy/skills/
-# Windows
-# 复制 skill/宋瓷 到 %USERPROFILE%\.codebuddy\skills\
+# 一键安装（任何支持 SKILL.md 的 agent）
+npx skills add ilps2/songci-skill
+
+# Claude Code（Mac / Linux）
+mkdir -p ~/.claude/skills && cp -r skills/宋瓷 ~/.claude/skills/
+
+# CodeBuddy（Mac）
+cp -r skills/宋瓷 ~/.codebuddy/skills/
+# CodeBuddy（Windows）
+# 复制 skills/宋瓷 到 %USERPROFILE%\.codebuddy\skills\
 ```
 
-重启 CodeBuddy 会话后，对话中提到「汝窑 / 天青 / 宋瓷风 UI / 新中式」或 `@宋瓷` 即自动调用。
+重启会话后，对话中提到「汝窑 / 天青 / 宋瓷风 UI / 新中式」或 `@宋瓷` 即自动调用。
 
 ### 使用模板
 

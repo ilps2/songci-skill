@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天青 · 宋瓷美学 UI 设计系统</title>
+<style>
+  /* ============ 设计令牌 Design Tokens（宋瓷釉色提取） ============ */
+  :root {
+    /* 釉色系 */
+    --tianqing: #7FA8B8;        /* 天青 · 主色 */
+    --tianqing-deep: #648C9E;   /* 深天青 · hover */
+    --tianqing-pale: #B9CFD9;   /* 淡天青 · 辅助 */
+    --fenqing: #B5CFC8;         /* 粉青 */
+    --douqing: #AABFA3;         /* 豆青 */
+    --yuebai: #EEF1F3;          /* 月白 · 页面背景 */
+    --xiangya: #F7F4EC;         /* 象牙白 · 卡片表面 */
+    --heiyou: #22201C;          /* 黑釉 · 主文字 */
+    --mo: #4A453D;              /* 墨 · 次级文字 */
+    --chahe: #A47C48;           /* 茶褐 · 点缀/强调 */
+    --ruzhou: #E5E0D4;          /* 汝釉 · 边框/分隔 */
+
+    /* 字体 */
+    --font-serif: 'Noto Serif SC','Songti SC','STSong','SimSun',serif;
+    --font-sans: 'Noto Sans SC','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+
+    /* 圆角（玉润感） */
+    --r-sm: 8px;
+    --r-md: 14px;
+    --r-lg: 22px;
+    --r-full: 999px;
+
+    /* 阴影（漫反射玉感） */
+    --shadow-soft: 0 8px 24px rgba(34,32,28,.07), 0 2px 6px rgba(34,32,28,.04);
+    --shadow-lift: 0 16px 40px rgba(100,140,158,.16), 0 4px 12px rgba(34,32,28,.05);
+
+    /* 间距（留白优先） */
+    --sp-1: 4px; --sp-2: 8px; --sp-3: 16px; --sp-4: 24px;
+    --sp-5: 40px; --sp-6: 64px; --sp-7: 96px;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-sans);
+    background: var(--yuebai);
+    color: var(--heiyou);
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--sp-4); }
+
+  /* ============ Hero ============ */
+  .hero {
+    position: relative;
+    padding: var(--sp-7) 0 var(--sp-6);
+    text-align: center;
+    overflow: hidden;
+  }
+  /* 极淡开片纹理背景 */
+  .hero::before {
+    content:""; position:absolute; inset:0; opacity:.05; pointer-events:none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cpath d='M40 10 Q60 40 30 70 T70 130 T40 200' stroke='%2322201C' fill='none' stroke-width='1'/%3E%3Cpath d='M180 30 Q150 80 190 120 T160 200' stroke='%2322201C' fill='none' stroke-width='1'/%3E%3Cpath d='M120 20 Q140 90 110 150 T150 230' stroke='%2322201C' fill='none' stroke-width='1'/%3E%3C/svg%3E");
+  }
+  .hero .kicker {
+    display:inline-block; font-size:13px; letter-spacing:.35em;
+    color: var(--chahe); margin-bottom: var(--sp-3);
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: var(--font-serif); font-weight: 600;
+    font-size: clamp(40px, 6vw, 64px); letter-spacing: .12em;
+    color: var(--heiyou);
+  }
+  .hero h1 em { font-style:normal; color: var(--tianqing-deep); }
+  .hero .sub {
+    margin-top: var(--sp-3); font-size: 17px; color: var(--mo);
+    max-width: 560px; margin-left:auto; margin-right:auto;
+  }
+  .hero .note {
+    margin-top: var(--sp-2); font-size: 13px; color: #8a8478;
+    letter-spacing: .08em;
+  }
+
+  /* 梅瓶剪影 */
+  .vase-wrap { margin: var(--sp-5) auto 0; width: 200px; }
+  .vase-wrap svg { width:100%; height:auto; display:block; filter: drop-shadow(0 18px 30px rgba(100,140,158,.28)); }
+
+  /* ============ 通用区块 ============ */
+  section { padding: var(--sp-6) 0; }
+  .sec-head { margin-bottom: var(--sp-5); }
+  .sec-head .tag {
+    font-size:12px; letter-spacing:.3em; color: var(--chahe);
+    display:block; margin-bottom: var(--sp-2);
+  }
+  .sec-head h2 {
+    font-family: var(--font-serif); font-weight:600; font-size: 30px;
+    letter-spacing:.06em; color: var(--heiyou);
+  }
+  .sec-head p { margin-top: var(--sp-2); color: var(--mo); font-size:15px; max-width:640px; }
+
+  /* ============ 设计原则 ============ */
+  .principles { display:grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: var(--sp-4); }
+  .principle {
+    background: var(--xiangya); border-radius: var(--r-lg);
+    padding: var(--sp-4); box-shadow: var(--shadow-soft);
+    border: 1px solid var(--ruzhou);
+    transition: transform .4s ease, box-shadow .4s ease;
+  }
+  .principle:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+  .principle .num {
+    font-family: var(--font-serif); font-size: 26px; color: var(--tianqing);
+  }
+  .principle h3 {
+    font-family: var(--font-serif); font-weight:600; font-size: 18px;
+    margin: var(--sp-2) 0 var(--sp-1); letter-spacing:.05em;
+  }
+  .principle .zh { font-size:12.5px; color: var(--chahe); letter-spacing:.15em; margin-bottom: var(--sp-2); }
+  .principle p { font-size: 14px; color: var(--mo); }
+
+  /* ============ 色板 ============ */
+  .palette { display:grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap: var(--sp-3); }
+  .swatch { border-radius: var(--r-md); overflow:hidden; box-shadow: var(--shadow-soft); background: var(--xiangya); border:1px solid var(--ruzhou); }
+  .swatch .chip { height: 96px; }
+  .swatch .info { padding: 10px 14px; }
+  .swatch .info .name { font-family: var(--font-serif); font-size:14.5px; font-weight:600; }
+  .swatch .info .desc { font-size:12px; color:var(--mo); }
+  .swatch .info .hex { font-size:11px; color:#8a8478; font-family:monospace; margin-top:2px; }
+
+  /* ============ 排版 ============ */
+  .type-row { display:flex; align-items:baseline; gap: var(--sp-4); border-bottom:1px solid var(--ruzhou); padding: var(--sp-3) 0; flex-wrap:wrap; }
+  .type-row .label { width:120px; font-size:11px; color:#8a8478; letter-spacing:.1em; }
+  .type-row .sample-serif { font-family: var(--font-serif); }
+  .type-row .sample-sans { font-family: var(--font-sans); }
+  .note-line { margin-top: var(--sp-3); font-size:13px; color:var(--mo); background:var(--xiangya); border-left:3px solid var(--tianqing); padding: var(--sp-2) var(--sp-3); border-radius:0 var(--r-sm) var(--r-sm) 0; }
+
+  /* ============ 组件 ============ */
+  .comp-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: var(--sp-4); }
+  .comp-card { background:var(--xiangya); border:1px solid var(--ruzhou); border-radius: var(--r-lg); padding: var(--sp-4); box-shadow: var(--shadow-soft); }
+  .comp-card h4 { font-family:var(--font-serif); font-size:15px; letter-spacing:.05em; margin-bottom: var(--sp-3); color: var(--heiyou); }
+  .btn-row { display:flex; gap: var(--sp-2); flex-wrap:wrap; align-items:center; }
+
+  .btn { font-family:var(--font-sans); font-size:14px; padding: 10px 24px; border-radius: var(--r-full); border:none; cursor:pointer; letter-spacing:.08em; transition: all .35s ease; }
+  .btn-primary { background: var(--tianqing); color:#fff; box-shadow: 0 4px 14px rgba(127,168,184,.35); }
+  .btn-primary:hover { background: var(--tianqing-deep); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(100,140,158,.4); }
+  .btn-ghost { background:transparent; color: var(--tianqing-deep); border:1px solid var(--tianqing-pale); }
+  .btn-ghost:hover { background: rgba(127,168,184,.08); }
+  .btn-text { background:transparent; color: var(--mo); padding:10px 8px; }
+  .btn-text:hover { color: var(--tianqing-deep); }
+
+  .tag { display:inline-block; font-size:12px; padding:4px 14px; border-radius: var(--r-full); letter-spacing:.1em; }
+  .tag-tian { background: rgba(127,168,184,.14); color: var(--tianqing-deep); }
+  .tag-fen  { background: rgba(181,207,200,.25); color:#4d7a6f; }
+  .tag-dou  { background: rgba(170,191,163,.25); color:#5c7a52; }
+  .tag-cha  { background: rgba(164,124,72,.14); color: var(--chahe); }
+
+  .field { margin-top: var(--sp-3); }
+  .field label { display:block; font-size:13px; color:var(--mo); margin-bottom:6px; letter-spacing:.08em; }
+  .input {
+    width:100%; font-family:var(--font-sans); font-size:15px;
+    padding: 12px 16px; border:1px solid var(--ruzhou); border-radius: var(--r-md);
+    background:#fffdf7; color: var(--heiyou); outline:none;
+    transition: border-color .35s ease, box-shadow .35s ease;
+  }
+  .input::placeholder { color:#b5ae9f; }
+  .input:focus { border-color: var(--tianqing); box-shadow: 0 0 0 4px rgba(127,168,184,.15); }
+
+  .switch { display:flex; align-items:center; gap: var(--sp-2); margin-top: var(--sp-3); cursor:pointer; }
+  .switch .track { width:46px; height:26px; border-radius: var(--r-full); background:#ddd8cc; position:relative; transition: background .35s ease; }
+  .switch .track::after { content:""; position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:#fff; box-shadow: 0 1px 4px rgba(0,0,0,.2); transition: transform .35s ease; }
+  .switch input { display:none; }
+  .switch input:checked + .track { background: var(--tianqing); }
+  .switch input:checked + .track::after { transform: translateX(20px); }
+  .switch span { font-size:13.5px; color: var(--mo); }
+
+  /* ============ App Mockup ============ */
+  .mockup-frame {
+    background: linear-gradient(160deg, #E9EEF1 0%, #F2F0EA 100%);
+    border-radius: var(--r-lg); border:1px solid var(--ruzhou);
+    box-shadow: var(--shadow-lift); padding: var(--sp-5) 0;
+    margin-top: var(--sp-4);
+  }
+  .mockup { max-width: 400px; margin:0 auto; background: var(--yuebai); border-radius: 28px; overflow:hidden; box-shadow: var(--shadow-lift); border:1px solid var(--ruzhou); }
+  .mockup .m-top { padding: var(--sp-4) var(--sp-4) var(--sp-3); }
+  .mockup .m-brand { font-family: var(--font-serif); font-size:20px; letter-spacing:.2em; color: var(--heiyou); }
+  .mockup .m-brand span { color: var(--tianqing-deep); }
+  .mockup .m-search { margin-top: var(--sp-3); }
+  .mockup .chips { display:flex; gap: var(--sp-2); padding: 0 var(--sp-4) var(--sp-3); flex-wrap:wrap; }
+  .mockup .cards { display:grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); padding: 0 var(--sp-4) var(--sp-4); }
+  .m-card { background: var(--xiangya); border-radius: var(--r-md); overflow:hidden; border:1px solid var(--ruzhou); box-shadow: var(--shadow-soft); transition: transform .4s ease; }
+  .m-card:hover { transform: translateY(-3px); }
+  .m-card .img { height: 110px; display:flex; align-items:center; justify-content:center; }
+  .m-card .img svg { width: 64px; height: auto; }
+  .m-card .meta { padding: 10px 12px; }
+  .m-card .meta .n { font-family: var(--font-serif); font-size:13.5px; font-weight:600; }
+  .m-card .meta .d { font-size:11px; color: var(--mo); margin-top:2px; }
+  .m-card .meta .t { margin-top:6px; }
+  .mockup .m-bottom { display:flex; justify-content:space-around; padding: 12px var(--sp-4); border-top:1px solid var(--ruzhou); background: var(--xiangya); }
+  .mockup .m-bottom span { font-size:12px; color:#a39b8b; letter-spacing:.1em; }
+  .mockup .m-bottom .on { color: var(--tianqing-deep); }
+
+  /* ============ 页脚 ============ */
+  footer { padding: var(--sp-6) 0 var(--sp-5); text-align:center; color:#8a8478; font-size:13px; border-top:1px solid var(--ruzhou); margin-top: var(--sp-5); }
+  footer .serif { font-family: var(--font-serif); color: var(--mo); letter-spacing:.2em; }
+
+  @media (max-width: 640px) {
+    section { padding: var(--sp-5) 0; }
+    .hero { padding: var(--sp-6) 0 var(--sp-5); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== HERO ==================== -->
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">Song Porcelain × UI Design</span>
+    <h1>天青 <em>·</em> 宋瓷美学设计系统</h1>
+    <p class="sub">从汝窑天青的釉色里提取主色，从哥窑开片里借一缕纹理，从龙泉的温润里学玉的触感——把宋代极简翻译成现代界面语言。</p>
+    <p class="note">极简 · 玉感 · 留白 · 素雅 · 含蓄</p>
+    <div class="vase-wrap">
+      <!-- 汝窑天青釉梅瓶剪影 -->
+      <svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="vaseGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#B9CFD9"/>
+            <stop offset=".45" stop-color="#7FA8B8"/>
+            <stop offset="1" stop-color="#648C9E"/>
+          </linearGradient>
+        </defs>
+        <path d="M88 26 L88 52 C60 92 44 128 50 188 C55 252 74 274 100 274 C126 274 145 252 150 188 C156 128 140 92 112 52 L112 26 Z"
+              fill="url(#vaseGrad)" opacity=".92"/>
+        <path d="M96 26 L96 56 C78 86 70 108 72 140" stroke="#fff" stroke-width="3" fill="none" opacity=".35" stroke-linecap="round"/>
+        <path d="M92 62 L108 62 M90 74 L110 74 M88 86 L112 86" stroke="#4E7486" stroke-width="1.6" opacity=".5"/>
+        <ellipse cx="100" cy="272" rx="40" ry="6" fill="#3E5F6E" opacity=".25"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ==================== 设计原则 ==================== -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tag">DESIGN PRINCIPLES</span>
+      <h2>五条设计原则</h2>
+      <p>宋瓷美学转译成界面设计，最终落在五条可执行的准则上。</p>
+    </div>
+    <div class="principles">
+      <div class="principle">
+        <div class="num">壹</div>
+        <h3>极简 · 器无赘饰</h3>
+        <div class="zh">MINIMALISM</div>
+        <p>内容优先，装饰最小化。少用边框与分隔线，用留白和字重建立层级，像宋瓷一件器物只有一个视觉焦点。</p>
+      </div>
+      <div class="principle">
+        <div class="num">贰</div>
+        <h3>素雅 · 釉色为美</h3>
+        <div class="zh">MUTED PALETTE</div>
+        <p>低饱和配色，全局只有一个主色（天青）。强调色只在关键动作处出现，其余界面让位于内容本身。</p>
+      </div>
+      <div class="principle">
+        <div class="num">叁</div>
+        <h3>玉感 · 温润触觉</h3>
+        <div class="zh">JADE TOUCH</div>
+        <p>大圆角、柔和阴影、微透明与渐变，模拟玉的漫反射。按钮按下去像触摸一块温润的釉面，而非冷硬的玻璃。</p>
+      </div>
+      <div class="principle">
+        <div class="num">肆</div>
+        <h3>留白 · 意境呼吸</h3>
+        <div class="zh">NEGATIVE SPACE</div>
+        <p>区块间距主动放大（48–96px），信息密度主动降低。留白不是浪费，是文人画里的"计白当黑"。</p>
+      </div>
+      <div class="principle">
+        <div class="num">伍</div>
+        <h3>含蓄 · 动效克制</h3>
+        <div class="zh">RESTRAINT</div>
+        <p>过渡统一 300–500ms、缓出曲线、无弹跳无夸张。动效像釉色流淌一样平静，存在但不出声。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 色彩系统 ==================== -->
+<section style="background:#F4F1E9;">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tag">COLOR · 釉色提取</span>
+      <h2>色彩系统</h2>
+      <p>直接从宋瓷釉色中取值：天青、粉青、月白、豆青、象牙白、黑釉、茶褐。全部低饱和，大面积使用以月白与象牙白为主。</p>
+    </div>
+    <div class="palette">
+      <div class="swatch"><div class="chip" style="background:#7FA8B8"></div><div class="info"><div class="name">天青</div><div class="desc">主色 Primary · 汝窑</div><div class="hex">#7FA8B8</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#B9CFD9"></div><div class="info"><div class="name">淡天青</div><div class="desc">辅助 · 晴空</div><div class="hex">#B9CFD9</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#B5CFC8"></div><div class="info"><div class="name">粉青</div><div class="desc">次强调 · 龙泉</div><div class="hex">#B5CFC8</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#AABFA3"></div><div class="info"><div class="name">豆青</div><div class="desc">成功态 · 耀州</div><div class="hex">#AABFA3</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#EEF1F3"></div><div class="info"><div class="name">月白</div><div class="desc">页面背景 · 官窑</div><div class="hex">#EEF1F3</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#F7F4EC"></div><div class="info"><div class="name">象牙白</div><div class="desc">卡片表面 · 定窑</div><div class="hex">#F7F4EC</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#22201C"></div><div class="info"><div class="name">黑釉</div><div class="desc">主文字 · 建窑</div><div class="hex">#22201C</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#A47C48"></div><div class="info"><div class="name">茶褐</div><div class="desc">点缀色 · 茶席</div><div class="hex">#A47C48</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 字体排版 ==================== -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tag">TYPOGRAPHY · 文人书写</span>
+      <h2>字体与排版</h2>
+      <p>标题用衬线体（宋体系）承接文人气质，正文用无衬线保证现代可读性。字号层级克制，最多五级。</p>
+    </div>
+    <div class="type-row"><span class="label">Display / 40px</span><span class="sample-serif" style="font-size:40px; font-weight:600;">雨过天青云破处</span></div>
+    <div class="type-row"><span class="label">H1 / 30px</span><span class="sample-serif" style="font-size:30px; font-weight:600;">天青色等烟雨</span></div>
+    <div class="type-row"><span class="label">H2 / 22px</span><span class="sample-serif" style="font-size:22px; font-weight:600;">温润如玉，素以为绚</span></div>
+    <div class="type-row"><span class="label">Body / 15px</span><span class="sample-sans" style="font-size:15px;">宋瓷之美，不在繁复纹饰，而在釉色与器型之中那一点含蓄的克制。</span></div>
+    <div class="type-row"><span class="label">Caption / 12px</span><span class="sample-sans" style="font-size:12px; color:var(--mo); letter-spacing:.15em;">RESTRAINT · 计白当黑 · 少即是多</span></div>
+    <div class="note-line">应用建议：标题 1.2–1.4 倍行距 + 0.06em 字距；正文行高 1.8；全局禁用斜体与极端字重，保持"素"。</div>
+  </div>
+</section>
+
+<!-- ==================== 组件库 ==================== -->
+<section style="background:#F4F1E9;">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tag">COMPONENTS · 器物成形</span>
+      <h2>组件示例</h2>
+      <p>按钮、标签、输入框、开关——所有组件遵循同一套釉色与玉感语言。</p>
+    </div>
+    <div class="comp-grid">
+      <div class="comp-card">
+        <h4>按钮 Buttons</h4>
+        <div class="btn-row">
+          <button class="btn btn-primary">天青主按钮</button>
+          <button class="btn btn-ghost">描边按钮</button>
+          <button class="btn btn-text">文字按钮</button>
+        </div>
+      </div>
+      <div class="comp-card">
+        <h4>标签 Tags</h4>
+        <div class="btn-row">
+          <span class="tag tag-tian">汝窑 · 天青</span>
+          <span class="tag tag-fen">龙泉 · 粉青</span>
+          <span class="tag tag-dou">建窑 · 兔毫</span>
+          <span class="tag tag-cha">哥窑 · 金丝</span>
+        </div>
+      </div>
+      <div class="comp-card">
+        <h4>输入框 Input</h4>
+        <div class="field">
+          <label>搜索器物</label>
+          <input class="input" placeholder="如：天青釉弦纹瓶" type="text">
+        </div>
+        <label class="switch">
+          <input type="checkbox"><span class="track"></span>
+          <span>开启文人模式（更少信息密度）</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== App Mockup ==================== -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tag">APPLICATION · 场景落地</span>
+      <h2>应用示例：天青 · 宋瓷图鉴</h2>
+      <p>把整套语言应用到一个器物鉴赏 App 首页——分类、搜索、卡片、底部导航，全部"素"下来。</p>
+    </div>
+    <div class="mockup-frame">
+      <div class="mockup">
+        <div class="m-top">
+          <div class="m-brand">天青<span>·</span>宋瓷</div>
+          <div class="field m-search">
+            <input class="input" placeholder="搜索器物 · 窑口 · 釉色" type="text">
+          </div>
+        </div>
+        <div class="chips">
+          <span class="tag tag-tian">全部</span>
+          <span class="tag tag-fen">汝窑</span>
+          <span class="tag tag-dou">龙泉</span>
+          <span class="tag tag-cha">建窑</span>
+          <span class="tag" style="background:#eee9dc;color:#8a8478;">哥窑</span>
+        </div>
+        <div class="cards">
+          <div class="m-card">
+            <div class="img" style="background:linear-gradient(160deg,#D7E3E8,#B9CFD9);">
+              <svg viewBox="0 0 120 160" width="64"><path d="M52 16 L52 32 C36 50 30 70 33 104 C36 140 45 150 60 150 C75 150 84 140 87 104 C90 70 84 50 68 32 L68 16 Z" fill="#7FA8B8" opacity=".9"/></svg>
+            </div>
+            <div class="meta"><div class="n">天青釉弦纹瓶</div><div class="d">汝窑 · 北宋</div><div class="t"><span class="tag tag-tian">天青</span></div></div>
+          </div>
+          <div class="m-card">
+            <div class="img" style="background:linear-gradient(160deg,#DDE8E4,#B5CFC8);">
+              <svg viewBox="0 0 120 160" width="64"><path d="M46 20 L46 40 C30 62 26 84 28 112 C30 138 38 150 60 150 C82 150 90 138 92 112 C94 84 90 62 74 40 L74 20 Z" fill="#A8C8BE" opacity=".9"/></svg>
+            </div>
+            <div class="meta"><div class="n">粉青釉梅瓶</div><div class="d">龙泉窑 · 南宋</div><div class="t"><span class="tag tag-fen">粉青</span></div></div>
+          </div>
+          <div class="m-card">
+            <div class="img" style="background:linear-gradient(160deg,#E6E2D8,#E5E0D4);">
+              <svg viewBox="0 0 120 120" width="60"><path d="M30 26 C34 56 42 78 60 96 C78 78 86 56 90 26 C66 18 48 18 30 26 Z M34 24 C36 22 40 22 44 23 M50 20 C54 19 60 19 66 20 M74 21 C78 22 82 23 86 26" fill="none" stroke="#7FA8B8" stroke-width="3" stroke-linecap="round"/></svg>
+            </div>
+            <div class="meta"><div class="n">金丝铁线开片洗</div><div class="d">哥窑 · 宋</div><div class="t"><span class="tag tag-cha">开片</span></div></div>
+          </div>
+          <div class="m-card">
+            <div class="img" style="background:linear-gradient(160deg,#3A3833,#22201C);">
+              <svg viewBox="0 0 120 100" width="62"><path d="M24 40 C28 62 42 74 60 74 C78 74 92 62 96 40 C78 30 44 30 24 40 Z" fill="#2E2A24"/><path d="M30 44 C36 42 46 42 52 45 M38 52 C44 50 54 50 60 52 M44 60 C50 58 58 58 64 60" stroke="#C9BFA8" stroke-width="1.6" fill="none" opacity=".85"/></svg>
+            </div>
+            <div class="meta"><div class="n">兔毫束口盏</div><div class="d">建窑 · 宋</div><div class="t"><span class="tag tag-dou">兔毫</span></div></div>
+          </div>
+        </div>
+        <div class="m-bottom">
+          <span class="on">图鉴</span><span>窑口</span><span>收藏</span><span>我的</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="serif">天青 · 宋瓷美学 UI 设计系统</div>
+  <p style="margin-top:8px;">从「雨过天青云破处」到一行 CSS 变量 · 2026</p>
+</footer>
+
+</body>
+</html>

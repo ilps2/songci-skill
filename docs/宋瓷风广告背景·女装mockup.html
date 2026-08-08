@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宋瓷风广告背景 · 中式女装主产品 mockup</title>
+<style>
+  :root{
+    --bg1:#F4F7F8; --bg2:#E4EDF0; --halo:rgba(127,168,184,.40);
+    --ink:#22201C; --ink2:#4A453D; --muted:#8a8478;
+    --main:#7FA8B8; --sub:#B9CFD9; --accent:#A47C48;
+    --crackle:rgba(34,32,28,.06);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:'PingFang SC','Microsoft YaHei',sans-serif;
+    background:#EDEAE3; padding:32px 18px 56px; color:#22201C;
+  }
+  .wrap{max-width:1060px;margin:0 auto;}
+
+  /* 切换器 */
+  .switch{display:flex;gap:10px;justify-content:center;margin-bottom:18px;flex-wrap:wrap;}
+  .switch button{
+    font-family:inherit;font-size:13px;cursor:pointer;
+    padding:9px 18px;border-radius:999px;border:1px solid #cfc8ba;
+    background:#fff;color:#4A453D;transition:.25s;
+  }
+  .switch button.active{background:#22201C;color:#fff;border-color:#22201C;}
+  .switch .hint{font-size:12px;color:#8a8478;align-self:center;}
+
+  /* 广告画框 */
+  .ad{
+    position:relative;border-radius:22px;overflow:hidden;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));
+    box-shadow:0 24px 60px rgba(50,50,45,.18);
+    min-height:560px;display:flex;align-items:center;
+  }
+  /* 玉光晕（让产品跳出来） */
+  .halo{
+    position:absolute;right:6%;top:50%;transform:translateY(-50%);
+    width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle,var(--halo),transparent 68%);
+    filter:blur(6px);pointer-events:none;
+  }
+  /* 开片纹理 */
+  .crackle{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+  .crackle path{stroke:var(--crackle);stroke-width:1;fill:none;}
+
+  /* 文案区 */
+  .copy{position:relative;z-index:3;padding:0 56px;max-width:480px;}
+  .tag{
+    display:inline-block;font-size:12px;letter-spacing:2px;
+    color:var(--accent);border:1px solid var(--accent);
+    padding:4px 12px;border-radius:999px;margin-bottom:18px;
+  }
+  .brand{
+    font-family:'Songti SC','Noto Serif CJK SC',serif;
+    font-size:54px;font-weight:700;line-height:1;color:var(--ink);letter-spacing:4px;
+  }
+  .slogan{
+    font-family:'Songti SC','Noto Serif CJK SC',serif;
+    font-size:21px;color:var(--ink2);margin-top:10px;letter-spacing:2px;
+  }
+  .points{margin:26px 0 30px;list-style:none;}
+  .points li{
+    font-size:14px;color:var(--ink2);margin:11px 0;display:flex;align-items:center;gap:10px;
+  }
+  .points li::before{
+    content:"";width:8px;height:8px;border-radius:50%;background:var(--main);flex:none;
+  }
+  .cta{
+    display:inline-block;background:var(--ink);color:#fff;text-decoration:none;
+    font-size:15px;letter-spacing:2px;padding:14px 36px;border-radius:12px;
+    transition:.25s;
+  }
+  .cta:hover{transform:translateY(-2px);opacity:.9;}
+
+  /* 产品区 */
+  .product{position:relative;z-index:2;flex:1;display:flex;justify-content:center;align-items:flex-end;}
+  .product svg{width:300px;max-width:60%;display:block;
+    filter:drop-shadow(0 18px 24px rgba(40,40,35,.18));}
+
+  /* 釉色条 */
+  .strip{position:absolute;left:56px;bottom:26px;z-index:3;display:flex;gap:6px;}
+  .strip i{width:26px;height:8px;border-radius:4px;display:block;}
+  .strip .lbl{font-size:11px;color:var(--muted);align-self:center;margin-left:8px;letter-spacing:1px;}
+
+  /* 角标 */
+  .corner{position:absolute;top:26px;right:30px;z-index:3;
+    font-family:'Songti SC',serif;font-size:13px;color:var(--ink2);letter-spacing:3px;}
+
+  .note{max-width:1060px;margin:22px auto 0;font-size:12.5px;color:#8a8478;line-height:1.8;text-align:center;}
+  .note b{color:#4A453D;}
+
+  /* 深色方案覆盖 */
+  .ad.dark{
+    --bg1:#2B2722; --bg2:#3C4A55; --halo:rgba(185,207,217,.22);
+    --ink:#F2EFE8; --ink2:#C9C2B6; --muted:#9a9387;
+    --main:#F4F0E6; --sub:#E5E0D4; --accent:#B0894F;
+    --crackle:rgba(238,241,243,.07);
+  }
+  .ad.dark .cta{background:var(--accent);color:#22201C;}
+  .ad.dark .cta:hover{background:#C49C5E;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="switch">
+    <button id="bLight" class="active" onclick="setTheme('light')">方案 A · 月白底 + 天青套装</button>
+    <button id="bDark" onclick="setTheme('dark')">方案 B · 深天青底 + 象牙白套装</button>
+    <span class="hint">← 切换看「背景退 / 产品进」的对比差</span>
+  </div>
+
+  <div class="ad" id="ad">
+    <div class="halo"></div>
+    <svg class="crackle" viewBox="0 0 1060 560" preserveAspectRatio="none">
+      <path d="M0,120 L180,150 L320,90 L520,160 L760,110 L1060,170"/>
+      <path d="M0,300 L160,260 L360,330 L600,280 L840,340 L1060,300"/>
+      <path d="M0,460 L200,420 L420,480 L640,430 L880,490 L1060,450"/>
+      <path d="M140,0 L180,150 L150,300 L190,460 L160,560"/>
+      <path d="M520,0 L520,160 L500,330 L540,480 L510,560"/>
+      <path d="M860,0 L840,110 L880,280 L850,420 L870,560"/>
+      <path d="M320,90 L360,330 M600,280 L640,430 M760,110 L840,340"/>
+    </svg>
+
+    <div class="corner">天青 · TIANQING</div>
+
+    <div class="copy">
+      <span class="tag">新中式 · 天青系列</span>
+      <div class="brand">天青</div>
+      <div class="slogan">雨过天青云破处</div>
+      <ul class="points">
+        <li>汝窑天青釉色，低饱和高级质感</li>
+        <li>立领盘扣，器无赘饰的极简剪裁</li>
+        <li>温润如玉，留白处皆是东方意境</li>
+      </ul>
+      <a class="cta" href="#">探索系列 →</a>
+    </div>
+
+    <div class="product" id="product"></div>
+
+    <div class="strip">
+      <i style="background:#7FA8B8"></i><i style="background:#B9CFD9"></i>
+      <i style="background:#EEF1F3"></i><i style="background:#F7F4EC"></i>
+      <i style="background:#A47C48"></i><i style="background:#22201C"></i>
+      <span class="lbl">品牌釉色板</span>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>配对法则演示</b>：方案 A 用浅月白底托中调天青产品（干净、雅）；方案 B 用深天青底托浅象牙白产品（强对比、跳脱）。
+    两版背景都「退后」，靠<b>玉光晕 + 明度差</b>让主产品「进」到视觉焦点——正是宋瓷美学做广告背景的关键。
+  </div>
+
+</div>
+
+<script>
+function svgSet(){
+  return `<svg viewBox="0 0 280 480" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="140" cy="70" rx="27" ry="30" fill="var(--main)"/>
+    <ellipse cx="140" cy="40" rx="15" ry="13" fill="var(--main)"/>
+    <circle cx="140" cy="74" r="20" fill="#E9D3C2"/>
+    <path d="M129,90 L151,90 L149,106 L131,106 Z" fill="#E9D3C2"/>
+    <path d="M104,122 L78,134 L66,222 L86,224 L96,162 Z" fill="var(--main)"/>
+    <path d="M176,122 L202,134 L214,222 L194,224 L184,162 Z" fill="var(--main)"/>
+    <path d="M128,104 L134,88 Q140,83 146,88 L152,104 L148,110 Q140,103 132,110 Z" fill="var(--main)" stroke="var(--accent)" stroke-width="1"/>
+    <path d="M134,107 L146,107 L176,122 L188,160 L190,222 L90,222 L92,160 L104,122 Z" fill="var(--main)"/>
+    <path d="M140,110 L140,222" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <circle cx="140" cy="128" r="3.6" fill="var(--accent)"/>
+    <circle cx="140" cy="156" r="3.6" fill="var(--accent)"/>
+    <circle cx="140" cy="184" r="3.6" fill="var(--accent)"/>
+    <path d="M90,222 L190,222" fill="none" stroke="var(--accent)" stroke-width="2"/>
+    <path d="M86,226 L194,226 L194,246 L86,246 Z" fill="var(--accent)"/>
+    <path d="M90,246 L190,246 L208,440 L72,440 Z" fill="var(--sub)"/>
+    <path d="M140,246 L140,440" fill="none" stroke="var(--accent)" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/>
+    <path d="M72,440 L208,440" fill="none" stroke="var(--accent)" stroke-width="3"/>
+    <path d="M152,300 Q168,338 150,378" fill="none" stroke="var(--accent)" stroke-width="1.5" opacity="0.38"/>
+    <path d="M128,322 Q114,354 130,386" fill="none" stroke="var(--accent)" stroke-width="1.5" opacity="0.30"/>
+  </svg>`;
+}
+document.getElementById('product').innerHTML = svgSet();
+
+function setTheme(t){
+  const ad=document.getElementById('ad');
+  const bL=document.getElementById('bLight'), bD=document.getElementById('bDark');
+  if(t==='dark'){ad.classList.add('dark');bD.classList.add('active');bL.classList.remove('active');}
+  else{ad.classList.remove('dark');bL.classList.add('active');bD.classList.remove('active');}
+}
+</script>
+</body>
+</html>

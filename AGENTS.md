@@ -24,6 +24,6 @@ The skill lives at `skills/宋瓷/SKILL.md` and follows the standard SKILL.md co
 
 ## Notes
 
-- HTML templates: open `templates/宋瓷风·通用主题版模板.html` in a browser → click any text to edit → click bottom glaze dots to switch themes → export PNG. No server, no build.
+- HTML templates: open `templates/宋瓷风小红书封面生成器.html` in a browser → pick layout/scene/glaze theme/size → click any text to edit → import photos into image slots → export PNG (1080/1620). Covers 9 layouts × 20 scenes. Single file, no server, no build.
 - `docs/wechat_publish.py` reads `WECHAT_APPID` / `WECHAT_SECRET` from env vars — placeholders only, no real secrets in this repo.
 - Docs filenames are Chinese; README provides the bilingual index.

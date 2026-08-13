@@ -244,7 +244,18 @@ body.exporting .editable{outline:none!important;background:transparent!important
   #main{flex-direction:column;align-items:center;}
   #fieldPanel{width:min(88vw,400px);position:static;order:2;}
   .canvas-wrap{order:1;}
+  #panel .rows{display:none;}
+  #panel.open .rows{display:block;}
+  #panel h1{font-size:14px;}
+  #panel h1 small{display:none;}
+  #panel .row{overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px;}
+  #panel .lbl{min-width:36px;font-size:11px;}
+  button.pbtn{padding:8px 14px;}
+  #actions{padding:10px 10px calc(10px + env(safe-area-inset-bottom));gap:8px;}
+  #actions button{font-size:13px;}
+  .canvas-tip{font-size:11px;max-width:88vw;}
 }
+@media (min-width:861px){ #panelToggle{display:none;} }
 @media print{
   #panel,#fieldPanel,#actions,.canvas-tip{display:none!important;}
   body{background:#fff;padding:0;}
@@ -257,13 +268,16 @@ body.exporting .editable{outline:none!important;background:transparent!important
 
 <header id="panel">
   <div class="row" style="justify-content:space-between;">
-    <h1>宋瓷风 · 小红书封面生成器 <small>9 布局 × 20 场景 × 6 釉色 × 4 尺寸 · 一色一窑</small></h1>
+    <h1>宋瓷风 · 小红书封面生成器 <small>9 布局 × 20 场景 × 6 釉色 × 4 尺寸</small></h1>
+    <button class="pbtn" id="panelToggle" onclick="document.getElementById('panel').classList.toggle('open')" aria-label="展开面板">控制面板 ▾</button>
   </div>
-  <div class="row"><span class="lbl">布局</span><span id="layoutRow"></span></div>
-  <div class="row" id="sceneRowWrap"><span class="lbl">场景</span><span id="sceneRow"></span></div>
-  <div class="row"><span class="lbl">釉色</span><span id="themeRow"></span></div>
-  <div class="row"><span class="lbl">尺寸</span><span id="sizeRow"></span></div>
-  <div class="row"><span class="lbl">字势</span><span id="intenseRow"></span></div>
+  <div class="rows">
+    <div class="row"><span class="lbl">布局</span><span id="layoutRow"></span></div>
+    <div class="row" id="sceneRowWrap"><span class="lbl">场景</span><span id="sceneRow"></span></div>
+    <div class="row"><span class="lbl">釉色</span><span id="themeRow"></span></div>
+    <div class="row"><span class="lbl">尺寸</span><span id="sizeRow"></span></div>
+    <div class="row"><span class="lbl">字势</span><span id="intenseRow"></span></div>
+  </div>
 </header>
 
 <div id="main">
@@ -811,11 +825,17 @@ async function exportPNG(targetWidth){
     const out=await html2canvas(c,{scale,backgroundColor:null,useCORS:true,logging:false});
     restore();
     document.body.classList.remove('exporting');
-    const a=document.createElement('a');
+    const dataUrl=out.toDataURL('image/png');
     const sceneName=(SCENES[state.scene]||{}).name||'';
-    a.download='宋瓷封面_'+sceneName+'_'+THEMES[state.theme].name.replace(/·/g,'')+'_'+SIZES[state.size].name.split(' ')[0]+'.png';
-    a.href=out.toDataURL('image/png');
-    a.click();
+    const fname='宋瓷封面_'+sceneName+'_'+THEMES[state.theme].name.replace(/·/g,'')+'_'+SIZES[state.size].name.split(' ')[0]+'.png';
+    if(window.AndroidBridge && typeof AndroidBridge.onExport==='function'){
+      AndroidBridge.onExport(dataUrl, fname);   // Android 原生：保存相册 + 分享
+    }else{
+      const a=document.createElement('a');
+      a.download=fname;
+      a.href=dataUrl;
+      a.click();
+    }
   }catch(e){
     restore();
     document.body.classList.remove('exporting');
